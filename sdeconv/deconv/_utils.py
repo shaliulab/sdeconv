@@ -2,6 +2,11 @@
 import torch
 from sdeconv.core import SSettings
 
+print("""
+  This file has been modified with respect to commit sylvainprigent/sdeconv@6f1ebc99ed1ad70c48198b755417c2e7744b82b0
+
+  The computation of psf_pad is changed so it's always the output of resize_psf_3d
+  """)
 
 def resize_psf_2d(image, psf):
     """Resize a 2D PSF image to the target image size
@@ -120,7 +125,7 @@ def pad_3d(image, psf, pad):
                                                                         image.shape[2])).view(
             (image.shape[0] + 2 * padding[0], image.shape[1] + 2 * padding[1],
              image.shape[2] + 2 * padding[2]))
-        # psf_pad = torch.nn.functional.pad(psf, p3d, "constant", 0)
+        psf_pad = torch.nn.functional.pad(psf, p3d, "constant", 0)
     else:
         image_pad = image
     psf_pad = resize_psf_3d(image_pad, psf)
