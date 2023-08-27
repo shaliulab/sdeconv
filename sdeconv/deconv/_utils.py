@@ -120,10 +120,10 @@ def pad_3d(image, psf, pad):
                                                                         image.shape[2])).view(
             (image.shape[0] + 2 * padding[0], image.shape[1] + 2 * padding[1],
              image.shape[2] + 2 * padding[2]))
-        psf_pad = torch.nn.functional.pad(psf, p3d, "constant", 0)
+        # psf_pad = torch.nn.functional.pad(psf, p3d, "constant", 0)
     else:
         image_pad = image
-        psf_pad = psf
+    psf_pad = resize_psf_3d(image_pad, psf)
     return image_pad, psf_pad, padding
 
 
